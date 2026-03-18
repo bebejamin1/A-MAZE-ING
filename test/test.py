@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/18 11:31:23 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/18 16:10:48 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/18 17:47:29 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -21,11 +21,15 @@ def look_neighbor(grid: list[list[int]], x1: int, y1: int) -> list:
     y_axes = [1, 0, -1, 0]
     compass = ["n", "e", "s", "w"]
     virgin_neighbor = []
-
+    print("coor og", y1, x1, "\n")
+    grid[-1][0] = 12
+    print(grid[-1][0])
     for x, y, c in zip(x_axes, y_axes, compass):
-        print()
-        if (grid[x1+x][y1+y] == 15 or grid[x1+x][y1+y] > 0):
+        if (grid[y1+y][x1+x] == 15 and x1+x >= 0 and y1+y >= 0):
+            print("calcul x:", x1+x)
+            print("calcul y:", y1+y, "\n")
             virgin_neighbor.append(c)
+
     return (virgin_neighbor)
 
 
@@ -93,7 +97,7 @@ def main() -> None:
     print("Grille:", grid.shape)
 
     maze_finish = maze(grid, width, height, entry, finish)
-    print(*grid, sep="\n")
+    print(*maze_finish, sep="\n")
 
     debug_display(maze_finish, width, height, entry, finish)
 
