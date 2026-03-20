@@ -4,12 +4,24 @@ from typing_extensions import Self
 from pydantic import BaseModel, Field, field_validator, model_validator, ValidationError
 
 
+def decode_walls(maze: str) -> Dict[str, bool]:
+    
+    wall = int(maze, 16)
+
+    return{
+        "N": bool(wall & 1),
+        "E": bool(wall & 2),
+        "S": bool(wall & 4),
+        "W": bool(wall & 8)
+    }
+
+
 def maze_data_extract(file: str) -> Tuple[List[str], str, str, str]:
     try:
         with open(file, 'r', encoding="utf-8") as lines:
             all_lines = [line.strip() for line in lines if line.strip()]
 
-            if len(all_lines) < 4:
+            if len(all_lines) <= 4:
                 raise ValueError("The file must contain at least 4 lines "
                                  "(maze + entry + exit + path)")
 
@@ -109,6 +121,9 @@ if __name__ == "__main__":
         print()
         maze = maze_data_extract(config.OUTPUT_FILE)
         print(f"TEST : {maze}")
+        
+        print("\n" + "Dessin".center(65, "="))
+
 
     except ValidationError as e:
         print("Expected validation error:")
