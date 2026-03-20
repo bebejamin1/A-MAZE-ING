@@ -7,9 +7,14 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/20 09:02:11 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/20 15:51:54 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/20 16:53:31 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
+
+
+def find_way(grid: list[list[int]], start: tuple[int],
+             finish: tuple[int]) -> list[str]:
+    pass
 
 
 def output(grid: list[list[int]]):
