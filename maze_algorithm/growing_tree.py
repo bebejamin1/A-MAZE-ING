@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/18 11:31:23 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/21 12:39:53 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/21 13:56:24 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -60,7 +60,7 @@ def print_fortytwo(grid: list[list[int]], finish: str,
 
 
 def look_neighbor(grid: list[list[int]], x1: int, y1: int,
-                  w: int, h: int, perfect: bool) -> list:
+                  w: int, h: int) -> list:
 
     x_axes: list[int] = [0, 1, 0, -1]
     y_axes: list[int] = [-1, 0, 1, 0]
@@ -85,20 +85,19 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
                  entry: tuple[int, int], perfect: bool,
                  seed: Optional[str]) -> list[list[int]]:
 
-    if seed:
-        random.seed(seed)
     if (perfect is False and width > 3 and height > 3):
         return (deficient_maze(grid, width, height, entry, seed))
+    if (seed):
+        random.seed(seed)
 
     grid: list[list[int]] = print_fortytwo(grid, "before", width, height)
 
     x: int = entry[0]
     y: int = entry[1]
-    back: int = -1
-    parkour: list[tuple[int, int]] = [x, y]
+    parkour: list[tuple[int, int]] = [(x, y)]
 
     while (np.max(grid) == 15):
-        neighbor: list[str] = look_neighbor(grid, x, y, width, height, perfect)
+        neighbor: list[str] = look_neighbor(grid, x, y, width, height)
         # print(neighbor)
         # print(*grid, sep="\n")
         # debug_display(grid, width, height, entry, (1, 1), (x, y))
@@ -129,7 +128,6 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
         else:
             parkour.pop()
             x, y = parkour[-1]
-            back -= 1
 
     grid = print_fortytwo(grid, "after", width, height)
     return (grid)
@@ -140,16 +138,16 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
 # =============================================================================
 
 def main() -> None:
-    width = height = 10
-    # width = 8
-    # height = 6
+    # width = height = 5
+    width = 15
+    height = 15
 
     entry = (0, 0)
     finish = ((width - 1), (height - 1))
 
     grid = np.array([[15 for _ in range(width)] for _ in range(height)])
 
-    grid = growing_tree(grid, width, height, entry, True, "")
+    grid = growing_tree(grid, width, height, entry, False, "")
     print(*grid, sep="\n")
 
     debug_display(grid, width, height, entry, finish, entry)
