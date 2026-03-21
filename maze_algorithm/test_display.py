@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/20 10:52:30 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/20 16:58:03 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/21 11:04:42 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -19,18 +19,18 @@ def debug_display(
     start: tuple[int, int],
     end: tuple[int, int],
     current: tuple[int, int] | None = None,
-    path: list[tuple[int, int]] | None = None) -> None:
+    path: list[tuple[int, int]] | None = None) -> None:  # noqa
 
     # Configuration des styles (ANSI colors)
     WALL = "██"
     SPACE = "  "
-    C_START = "\033[92mS \033[0m"  # Vert
-    C_END   = "\033[94mF \033[0m"  # Bleu (EXIT)
-    C_CURR  = "\033[93mX \033[0m"  # Jaune (Position actuelle)
-    C_PATH  = "\033[91m··\033[0m"  # Rouge (Chemin)
+    C_START = "\033[92mS \033[0m"  # noqa
+    C_END   = "\033[94mF \033[0m"  # noqa
+    C_CURR  = "\033[93mX \033[0m"  # noqa
+    C_PATH  = "\033[91m··\033[0m"  # noqa
 
     # 1. Initialisation de la grille étendue remplie de murs
-    disp = [[WALL for _ in range(2 * width + 1)] for _ in range(2 * height + 1)]
+    disp = [[WALL for _ in range(2 * width + 1)] for _ in range(2 * height + 1)]  # noqa
 
     # 2. Sculpture des passages et des murs
     for y in range(height):
@@ -40,10 +40,10 @@ def debug_display(
 
             val = grid[y][x]
             # On ouvre les murs si le bit correspondant est à 0
-            if not (val & 1): disp[ny - 1][nx] = SPACE  # Nord
-            if not (val & 2): disp[ny][nx + 1] = SPACE  # Est
-            if not (val & 4): disp[ny + 1][nx] = SPACE  # Sud
-            if not (val & 8): disp[ny][nx - 1] = SPACE  # Ouest
+            if not (val & 1): disp[ny - 1][nx] = SPACE  # noqa
+            if not (val & 2): disp[ny][nx + 1] = SPACE  # noqa
+            if not (val & 4): disp[ny + 1][nx] = SPACE  # noqa
+            if not (val & 8): disp[ny][nx - 1] = SPACE  # noqa
 
     # 3. Marquage du chemin (Path)
     if path:
@@ -66,7 +66,7 @@ def debug_display(
         disp[2 * current[1] + 1][2 * current[0] + 1] = C_CURR
 
     # 5. Affichage final
-    print("\n" + "═" * (width * 4))
+    print("\n" + "".center((width * 4) + 2, "="))
     for row in disp:
         print("".join(row))
-    print("═" * (width * 4) + "\n")
+    print("".center((width * 4) + 2, "=") + "\n")

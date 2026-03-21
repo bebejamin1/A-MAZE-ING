@@ -1,7 +1,7 @@
 import sys
 from typing import Dict, List, Tuple
 from typing_extensions import Self
-from pydantic import BaseModel, Field, field_validator, model_validator, ValidationError
+from pydantic import BaseModel, Field, field_validator, model_validator, ValidationError  # noqa
 
 
 def maze_data_extract(file: str) -> Tuple[List[str], str, str, str]:
