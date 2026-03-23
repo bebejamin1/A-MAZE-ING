@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/20 09:02:11 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/21 15:23:32 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/23 17:15:43 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -15,8 +15,15 @@
 from bfs_algorithm import find_way
 
 
-def output(grid: list[list[int]]):
-    pass
+def output(grid: list[list[int]], start: tuple[int], finish: tuple[int],
+           way: list[str]):
+    tab = []
+    try:
+        
+    try:
+        with open("output_maze.txt", "w") as f:
+    except (ValueError, AttributeError) as e:
+        print(f"ERROR: {e}")
 
 
 if __name__ == "__main__":

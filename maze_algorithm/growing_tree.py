@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/18 11:31:23 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/21 15:17:31 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/23 16:57:06 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -29,7 +29,7 @@ from defective_maze import deficient_maze
 def print_fortytwo(grid: list[list[int]], finish: str,
                    width: int, height: int) -> list[list[int]]:
 
-    if (width >= 11 and height >= 9):  # voir avec fleur🌻​ 11 \ 9
+    if (width >= 11 and height >= 9):
 
         w: int = int(round(((width - 7) / 2), 0))
         h: int = int(round(((height - 5) / 2), 0))
@@ -95,35 +95,25 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
     x: int = entry[0]
     y: int = entry[1]
     parkour: list[tuple[int, int]] = [(x, y)]
+    mouv: list[str, tuple[int]] = {
+        "N": (0, -1, 1, 4),
+        "E": (1, 0, 2, 8),
+        "S": (0, 1, 4, 1),
+        "W": (-1, 0, 8, 2)
+    }
 
     while (np.max(grid) == 15):
         neighbor: list[str] = look_neighbor(grid, x, y, width, height)
-        # print(neighbor)
-        # print(*grid, sep="\n")
-        # debug_display(grid, width, height, entry, (1, 1), (x, y))
 
         if (neighbor):
             dir: str = random.choice(neighbor)
-            if (dir == "N"):
-                grid[y][x] -= 1  # N
-                y += -1
-                grid[y][x] -= 4  # S
+            dx, dy, bits_dir, bits_next = mouv[dir]
+            nx, ny = x + dx, y + dy
 
-            elif (dir == "E"):
-                grid[y][x] -= 2  # E
-                x += 1
-                grid[y][x] -= 8  # W
-
-            elif (dir == "S"):
-                grid[y][x] -= 4  # S
-                y += 1
-                grid[y][x] -= 1  # N
-
-            elif (dir == "W"):
-                grid[y][x] -= 8  # W
-                x += -1
-                grid[y][x] -= 2  # E
-            parkour.append((x, y))
+            grid[y][x] &= ~bits_dir
+            grid[ny][nx] &= ~bits_next
+            parkour.append((nx, ny))
+            x, y = nx, ny
 
         else:
             parkour.pop()
@@ -147,7 +137,7 @@ def main() -> None:
 
     grid = np.array([[15 for _ in range(width)] for _ in range(height)])
 
-    grid = growing_tree(grid, width, height, entry, False, "")
+    grid = growing_tree(grid, width, height, entry, True, "")
     print(*grid, sep="\n")
 
     debug_display(grid, width, height, entry, finish, entry)

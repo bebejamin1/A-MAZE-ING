@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/21 12:17:31 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/21 15:24:53 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/23 15:01:33 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -16,7 +16,6 @@ from typing import Optional
 # import numpy as np
 import random
 
-# from test_display import debug_display
 
 # voir porte logique
 
@@ -28,7 +27,7 @@ import random
 def print_fortytwo(grid: list[list[int]], finish: str,
                    width: int, height: int) -> list[list[int]]:
 
-    if (width >= 11 and height >= 9):  # voir avec fleur🌻​ 11 \ 9
+    if (width >= 11 and height >= 9):
 
         w: int = int(round(((width - 7) / 2), 0))
         h: int = int(round(((height - 5) / 2), 0))
@@ -55,7 +54,7 @@ def print_fortytwo(grid: list[list[int]], finish: str,
 
 # *****************************************************************************
 # *                         look_neighbor()                                   *
-# *  Check to see if the current position can move to an virgin square        *
+# *          Check to see if the current position can move                    *
 
 def look_neighbor(grid: list[list[int]], x1: int, y1: int,
                   w: int, h: int) -> list:
@@ -80,8 +79,8 @@ def look_neighbor(grid: list[list[int]], x1: int, y1: int,
 
 
 # *****************************************************************************
-# *                      base growing_tree()                                  *
-# *         Generate the maze using the growing tree algorithm                *
+# *                     base deficient_maze()                                 *
+# *     Generate the deficient maze algorithm for perfect = false             *
 
 def deficient_maze(grid: list[list[int]], width: int, height: int,
                    entry: tuple[int, int],
@@ -110,16 +109,14 @@ def deficient_maze(grid: list[list[int]], width: int, height: int,
             dx, dy, bit_c, bit_v = mouv[direction]
             nx, ny = x + dx, y + dy
 
-            # CAS 1 : C'est une nouvelle case (vierge)
-            if grid[ny][nx] == 15:
+            if (grid[ny][nx] == 15):
                 grid[y][x] &= ~bit_c
                 grid[ny][nx] &= ~bit_v
                 parkour.append((nx, ny))
 
-            # CAS 2 : C'est une case déjà visitée (on crée une boucle)
             else:
 
-                if grid[y][x] & bit_c:
+                if (grid[y][x] & bit_c):
                     grid[y][x] &= ~bit_c
                     grid[ny][nx] &= ~bit_v
 
