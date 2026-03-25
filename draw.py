@@ -13,6 +13,7 @@ COLORS = [
     "\033[34m",
     "\033[35m",
     "\033[36m",
+    "\033[37m",
     "\033[0;91m",
     "\033[0;95m",
 ]
@@ -21,7 +22,7 @@ RESET = "\033[0m"
 
 def get_wall_color() -> str:
         print("Choose your color:")
-        print("1 - Red")
+        print("1 - Pink")
         print("2 - Green")
         print("3 - Yellow")
         print("4 - Blue")
@@ -75,14 +76,14 @@ def draw_walls(coord: List[str], config: 'MazeConfig', path: List[str],
     ent_x, ent_y = map(int, config.ENTRY.split(","))
     ext_x, ext_y = map(int, config.EXIT.split(","))
 
+    color = get_wall_color()
+
     try:
         while True:
 
             os.system('clear')
 
-            #color = get_wall_color()
-
-            wall = "██"
+            wall = color + "██" + RESET
 
             coord_path = decode_path(ent_x, ent_y, path)
 
@@ -104,8 +105,8 @@ def draw_walls(coord: List[str], config: 'MazeConfig', path: List[str],
                     elif x == ext_x and y == ext_y:
                         mid_line += "🏁"
                     elif hexa.upper() == "F":
-                        color = random.choice(COLORS)
-                        mid_line += color + wall + RESET
+                        color_42 = random.choice(COLORS)
+                        mid_line += color_42 + "██" + RESET
                     elif (x, y) in coord_path:
                         mid_line += "⭐"
                     else:
