@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/20 10:52:30 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/21 11:04:42 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/26 11:13:42 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -27,7 +27,7 @@ def debug_display(
     C_START = "\033[92mS \033[0m"  # noqa
     C_END   = "\033[94mF \033[0m"  # noqa
     C_CURR  = "\033[93mX \033[0m"  # noqa
-    C_PATH  = "\033[91m··\033[0m"  # noqa
+    C_PATH  = "\033[91m⭐​\033[0m"  # noqa
 
     # 1. Initialisation de la grille étendue remplie de murs
     disp = [[WALL for _ in range(2 * width + 1)] for _ in range(2 * height + 1)]  # noqa

@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/18 11:31:23 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/23 16:57:06 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/26 11:09:47 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -129,8 +129,8 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
 
 def main() -> None:
     # width = height = 5
-    width = 15
-    height = 15
+    width = 10
+    height = 10
 
     entry = (0, 0)
     finish = ((width - 1), (height - 1))
