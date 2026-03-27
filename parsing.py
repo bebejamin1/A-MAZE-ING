@@ -1,7 +1,8 @@
 import sys
 from typing import Dict, List, Tuple, Set
 from typing_extensions import Self
-from pydantic import (BaseModel, Field, field_validator, model_validator)
+from pydantic import (BaseModel, Field, field_validator, model_validator,
+                      ValidationError)
 
 
 def maze_data_extract(file: str) -> Tuple[List[str], str, str, str]:
@@ -21,10 +22,10 @@ def maze_data_extract(file: str) -> Tuple[List[str], str, str, str]:
             return maze, entry, exit_coord, path
 
     except FileNotFoundError:
-        print(f"Error : The file {file} has not been generated")
+        print(f"\nError : The file {file} has not been generated\n")
         sys.exit()
     except ValueError as e:
-        print(f"Error : {e}")
+        print(f"\nError : {e}\n")
         sys.exit()
 
 
@@ -39,6 +40,8 @@ class MazeConfig(BaseModel):
     @field_validator("ENTRY", "EXIT")
     @classmethod
     def check_coordinates_format(cls, value) -> str:
+        if not "," in value:
+            raise ValueError("Coordinates must be 'x,y' format")
         parts = value.split(",")
         if len(parts) != 2:
             raise ValueError("Coordinates must be 'x,y' format")
@@ -78,12 +81,11 @@ def extract_config(file_path: str) -> Dict[str, str]:
         mandatory_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE",
                           "PERFECT"]
         for key in mandatory_keys:
-            if key not in config:
-                print(f"Error: the key {key} is missing")
-                sys.exit()
+            if key not in config or not config[key]:
+                raise ValueError(f"the key {key} is missing or empty")
 
         return config
 
-    except FileNotFoundError:
-        print("Error: the file 'config.txt' is missing")
+    except (FileNotFoundError, ValueError) as e:
+        print(f"\nERROR parsing: {e}\n")
         sys.exit()

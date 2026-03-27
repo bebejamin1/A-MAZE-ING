@@ -4,8 +4,6 @@ import draw
 import parsing
 
 
-
-
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
@@ -14,8 +12,14 @@ if __name__ == "__main__":
 
     config_file = sys.argv[1]
 
-    config_dict = parsing.extract_config(config_file)
-    config = parsing.MazeConfig(**config_dict)
+    try:
+        config_dict = parsing.extract_config(config_file)
+        config = parsing.MazeConfig(**config_dict)
+    except (ValueError, ValidationError) as e:
+        print("\nExpected validation error:")
+        print(e.errors()[0]["msg"])
+        print()
+        sys.exit()
 
     print()
     print("     .-.   .-.     .--.                         ".center(60, " "))
@@ -25,7 +29,7 @@ if __name__ == "__main__":
     print()
 
 
-    print("    WELCOME !")
+    print('\033[43m  WELCOME !  \033[0m'.center(68, " "))
     while True:
         print()
         print("1 - Re-generate a new maze")
@@ -34,7 +38,7 @@ if __name__ == "__main__":
         print("4 - Quit")
 
         try:
-            choice = int(input("\nWhat do you want ? : "))
+            choice = int(input("\n" + "\033[40m What do you want ? \033[0m" + ": "))
             maze, entry, exit_coord, path = parsing.maze_data_extract(config.OUTPUT_FILE)
             if choice == 1:
                 draw.draw_walls(maze, config, path, False)
@@ -46,6 +50,11 @@ if __name__ == "__main__":
             elif choice == 4:
                 print("Goodbye!")
                 sys.exit()
-        except Exception as e:
-            print(f"ERROR: {e}")
-       
+            else:
+                print("\nIt's not on the menu :/\n")
+        except (ValueError, TypeError, ValidationError) as e:
+            print(f"\nERROR main: {e}\n")
+            sys.exit()
+        except KeyboardInterrupt:
+            print("\n\nWhy shut down the programme so abruptly? :(\n")
+            sys.exit()

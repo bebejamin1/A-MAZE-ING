@@ -37,7 +37,7 @@ def get_wall_color() -> str:
         print("7 - Default (white)")
 
         choice = input(("So, what would you like? : "))
-        
+
         try:
             choice_int = int(choice)
             if 0 < choice_int < 8:
@@ -46,9 +46,8 @@ def get_wall_color() -> str:
                 return COLORS[choice_int - 1]
             else:
                 raise ValueError
-        except (ValueError, IndexError):
-            print(f"Incorrect input: you must choose a number between 1 and 7")
-            sys.exit()
+        except ValueError:
+            print(f"\nIncorrect input: you must choose a number between 1 and 7")
 
 
 def decode_path(ent_x: int, ent_y: int, coord: List[str]) -> Tuple[int]:
@@ -70,7 +69,7 @@ def decode_path(ent_x: int, ent_y: int, coord: List[str]) -> Tuple[int]:
 
 
 def decode_walls(maze: str) -> Dict[str, bool]:
-    
+
     wall = int(maze, 16)
 
     return {
@@ -112,7 +111,7 @@ def draw_walls(coord: List[str], config: 'MazeConfig', path: List[str],
                     top_line += wall if walls["N"] else "  "
 
                     mid_line += wall if walls["W"] else "  "
-                    
+
                     if x == ent_x and y == ent_y:
                         mid_line += "🟩"
                     elif x == ext_x and y == ext_y:
@@ -134,7 +133,9 @@ def draw_walls(coord: List[str], config: 'MazeConfig', path: List[str],
 
             print(wall * (config.WIDTH * 2 + 1))
 
+            print("\nTo display the menu: Ctrl + C :)\n")
+
             time.sleep(0.2)
 
     except KeyboardInterrupt:
-        print("\nThe animation has stopped :(")
+        print("\nThe animation has stopped :(\n")
