@@ -1,8 +1,7 @@
 import sys
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional, Any
 from typing_extensions import Self
-from pydantic import (BaseModel, Field, field_validator, model_validator,
-                      ValidationError)
+from pydantic import (BaseModel, Field, field_validator, model_validator)
 
 
 def get_tuple(entry: str, exit_coord: str) -> List[Tuple[int]]:
@@ -43,6 +42,7 @@ class MazeConfig(BaseModel):
     EXIT: str
     OUTPUT_FILE: str
     PERFECT: bool
+    SEED: Optional[Any] = Field(default="")
 
     @field_validator("ENTRY", "EXIT")
     @classmethod

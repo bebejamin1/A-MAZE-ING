@@ -5,6 +5,7 @@ from visualize.parsing import maze_data_extract, get_tuple, extract_config
 from visualize.parsing import MazeConfig
 from tools1.gen_output import output
 
+
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
@@ -30,6 +31,7 @@ if __name__ == "__main__":
     print()
 
     print('\033[43m  WELCOME !  \033[0m'.center(68, " "))
+    show_path = False
     while True:
         print()
         print("1 - Re-generate a new maze")
@@ -37,21 +39,39 @@ if __name__ == "__main__":
         print("3 - Rotate maze colors")
         print("4 - Quit")
         try:
-
             choice = int(input("\n" + "\033[40m What do you want ? \033[0m" + ": "))
             if choice == 1:
                 coord = get_tuple(config.ENTRY, config.EXIT)
-                output(config.WIDTH, config.HEIGHT, coord[0], coord[1], config.PERFECT, config.OUTPUT_FILE)
+                output(config.WIDTH, config.HEIGHT, coord[0], coord[1],
+                       config.PERFECT, config.OUTPUT_FILE, config.SEED)
                 maze, entry, exit_coord, path = maze_data_extract(config.OUTPUT_FILE)
-                draw_walls(maze, config, path, False)
+                draw_walls(maze, config, path, False, show_path)
             elif choice == 2:
-                pass
+                if show_path is False:
+                    show_path = True
+                else:
+                    show_path = False
+                draw_walls(maze, config, path, False, show_path)
             elif choice == 3:
                 color = True
                 maze, entry, exit_coord, path = maze_data_extract(config.OUTPUT_FILE)
-                draw_walls(maze, config, path, True)
+                draw_walls(maze, config, path, color, show_path)
             elif choice == 4:
-                print("Goodbye!")
+                print()
+                print("█████████████████████████████████████".center(70, " "))
+                print("███████▀█████████████████████████████".center(70, " "))
+                print("██████░░█████████████████████████████".center(70, " "))
+                print("█████▀░▄█████████████████████████████".center(70, " "))
+                print("█████░░▀▀▀▀▀███▀▀█████▀▀███▀▀▀▀▀█████".center(70, " "))
+                print("█████░░▄██▄░░███░░███░░███░░███░░████".center(70, " "))
+                print("████░░█████░░███░▄███░░██░░▀▀▀░▄█████".center(70, " "))
+                print("████░░████▀░███░░███▀░███░░██████████".center(70, " "))
+                print("████░░█▀▀░▄████▄░▀▀▀░▄███▄░▀▀▀░▄█████".center(70, " "))
+                print("█████▄▄▄███████████░░██████▄▄████████".center(70, " "))
+                print("██████████████░▀█▀░▄█████████████████".center(70, " "))
+                print("███████████████▄▄▄███████████████████".center(70, " "))
+                print("█████████████████████████████████████".center(70, " "))
+                print()
                 sys.exit()
             else:
                 print("\nIt's not on the menu :/\n")

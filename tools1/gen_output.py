@@ -11,8 +11,8 @@
 #                                                                             #
 # ########################################################################### #
 
+from typing import Optional, Any
 
-# from bfs_algorithm import find_way
 from maze_algorithm.growing_tree import grow_tree
 from tools1.bfs_algorithm import find_way
 import numpy as np
@@ -22,10 +22,10 @@ reset = "\033[0m"
 
 
 def output(width, height, start: tuple[int], finish: tuple[int],
-           perfect: list[str], name_file: str) -> None:
+           perfect: list[str], name_file: str, seed: Optional[Any]) -> None:
 
     gr = np.array([[15 for _ in range(width)] for _ in range(height)])
-    grid = grow_tree(gr, width, height, start, perfect, "")
+    grid = grow_tree(gr, width, height, start, perfect, seed)
     way = find_way(grid, start, finish, width, height)
 
     entry = f"{start[0]},{start[1]}"
