@@ -51,6 +51,7 @@ if __name__ == "__main__":
                     show_path = True
                 else:
                     show_path = False
+                maze, entry, exit_coord, path = maze_data_extract(config.OUTPUT_FILE)                
                 draw_walls(maze, config, path, False, show_path)
             elif choice == 3:
                 color = True
@@ -76,8 +77,7 @@ if __name__ == "__main__":
             else:
                 print("\nIt's not on the menu :/\n")
         except (ValueError, TypeError, ValidationError) as e:
-            print(f"\nERROR main: {e}\n")
-            sys.exit()
+            print(f"\nERROR: {e}\n")
         except KeyboardInterrupt:
             print("\n\nWhy shut down the programme so abruptly? :(\n")
             sys.exit()

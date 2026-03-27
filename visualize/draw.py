@@ -38,17 +38,13 @@ def get_wall_color() -> str:
 
     choice = input("\nSo, what would you like? : ")
 
-    try:
-        choice_int = int(choice)
-        if 0 < choice_int < 8:
-            if choice_int == 7:
-                return "\033[37m"
-            return COLORS[choice_int - 1]
-        else:
-            raise ValueError
-    except ValueError:
-        print(f"\nIncorrect input: you must choose a number between 1 and 7")
-
+    choice_int = int(choice)
+    if 0 < choice_int < 8:
+        if choice_int == 7:
+            return "\033[37m"
+        return COLORS[choice_int - 1]
+    else:
+        raise ValueError("Incorrect input: you must choose a number between 1 and 7")
 
 def decode_path(ent_x: int, ent_y: int, coord: List[str]) -> Tuple[int]:
     path_coord = set()
