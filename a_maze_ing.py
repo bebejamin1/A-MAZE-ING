@@ -24,7 +24,7 @@ if __name__ == "__main__":
     print()
     print("     .-.   .-.     .--.                         ".center(60, " "))
     print("    | OO| | OO|   / _.-' .-.   .-.  .-.   .''.  ".center(60, " "))
-    print("    |   | |   |   \  '-. '-'   '-'  '-'   '..'  ".center(60, " "))
+    print("    |   | |   |   \\  '-. '-'   '-'  '-'   '..'  ".center(60, " "))
     print("    '^^^' '^^^'    '--'                         ".center(60, " "))
     print()
 

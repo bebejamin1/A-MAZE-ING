@@ -28,11 +28,11 @@ RESET = "\033[0m"
 def get_wall_color() -> str:
         print()
         print("Choose your color:")
-        print("1 - Pink")
+        print("1 - Red")
         print("2 - Green")
         print("3 - Yellow")
         print("4 - Blue")
-        print("5 - Pink")
+        print("5 - Purple")
         print("6 - Cyan")
         print("7 - Default (white)")
 
