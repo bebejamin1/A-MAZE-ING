@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/21 15:22:46 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/26 16:52:09 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/27 10:33:16 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -32,15 +32,11 @@ def look_neighbor(grid: list[list[int]], x1: int, y1: int,
 
     for x, y, c, b, bo in directions:
         nx, ny = x1 + x, y1 + y
-
         if (x1+x >= 0 and y1+y >= 0 and x1+x < w and y1+y < h
                 and c != oposite[prec]
                 and grid[y1][x1] & b == 0 and grid[ny][nx] & bo == 0):
 
             virgin_neighbor.append(c)
-        # if (c != oposite[prec]
-        #         and grid[y1][x1] & b == 0 and grid[ny][nx] & bo == 0):
-
 
     return virgin_neighbor
 
@@ -48,9 +44,9 @@ def look_neighbor(grid: list[list[int]], x1: int, y1: int,
 def find_way(grid: list[list[int]], start: tuple[int],
              finish: tuple[int], width: int, height: int, ) -> list[str]:
 
-    prec = "Z"
-    save_dir = "Z"
     x, y = start
+    prec = "Z"
+    save_dir = ["Z"]
     save = [(x, y)]
     path = [(x, y)]
     mouv: list[str, tuple[int]] = {
@@ -64,37 +60,27 @@ def find_way(grid: list[list[int]], start: tuple[int],
 
         neighbors = look_neighbor(grid, x, y, width, height, prec)
 
-        if (neighbors):
-            direction = random.choice(neighbors)
-            prec = direction
+        if (len(neighbors) > 1):
+            save.append((x, y))
+            for direction in neighbors:
+                while (len(neighbors) == 1):
+                    neighbors = look_neighbor(grid, x, y, width, height, prec)
 
-            dir = mouv[direction]
-            x += dir[0]
-            y += dir[1]
-            path.append((x, y))
+                    dir = mouv[neighbors]
+                    x += dir[0]
+                    y += dir[1]
+                    path.append((x, y))
 
-            if (len(neighbors) > 1):
-                save.append((x, y))
-                save_dir = direction
-                print(neighbors)
-                print(path)
-                print("SAVE", save)
-                print(direction)
-                debug_display(grid, width, height, start, finish, (9, 2), path)
-                input("len > 1 ")
+        if (len(neighbors) == 1):
 
         else:
-            while (path[-1] != save[-1]):
+            while (save[-1] != path[-1]):
                 path.pop()
-            # path.pop()
-            save.pop()
-            prec = save_dir
+            while (len(save) > 2):
+                del save[0]
+                del save_dir[0]
+            prec = save_dir[-1]
             x, y = path[-1]
-            print(path)
-            print("SAVE", save)
-            print(direction)
-            debug_display(grid, width, height, start, finish, (9, 3), path)
-            input("ok: ")
 
     return (path)
 

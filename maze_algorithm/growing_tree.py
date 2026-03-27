@@ -7,7 +7,7 @@
 #   By: bbeaurai <bbeaurai@student.42lehavre.fr>     +#+  +:+       +#+       #
 #                                                  +#+#+#+#+#+   +#+          #
 #   Created: 2026/03/18 11:31:23 by bbeaurai            #+#    #+#            #
-#   Updated: 2026/03/26 11:09:47 by bbeaurai           ###   ########.fr      #
+#   Updated: 2026/03/27 10:25:01 by bbeaurai           ###   ########.fr      #
 #                                                                             #
 # ########################################################################### #
 
@@ -119,7 +119,7 @@ def growing_tree(grid: list[list[int]], width: int, height: int,
             parkour.pop()
             x, y = parkour[-1]
 
-    grid = print_fortytwo(grid, "after", width, height)
+    grid: list[list[int]] = print_fortytwo(grid, "after", width, height)
     return (grid)
 
 
