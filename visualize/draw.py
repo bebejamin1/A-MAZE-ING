@@ -1,9 +1,8 @@
 import os
-import sys
 import random
 import time
-from typing import Dict, List, Tuple, Optional
-from parsing import MazeConfig
+from typing import Dict, List, Tuple
+from visualize.parsing import MazeConfig
 
 
 COLORS = [

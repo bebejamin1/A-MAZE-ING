@@ -37,8 +37,8 @@ def maze_data_extract(file: str) -> Tuple[List[str], str, str, str]:
 
 
 class MazeConfig(BaseModel):
-    WIDTH: int = Field(gt=1, le=100)
-    HEIGHT: int = Field(gt=1, le=100)
+    WIDTH: int = Field(gt=1, le=50)
+    HEIGHT: int = Field(gt=1, le=50)
     ENTRY: str
     EXIT: str
     OUTPUT_FILE: str
