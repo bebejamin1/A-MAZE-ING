@@ -54,6 +54,13 @@ class MazeConfig(BaseModel):
             raise ValueError("Coordinates must be 'x,y' format")
         return value
 
+    @field_validator("OUTPUT_FILE")
+    @classmethod
+    def check_outputfile(cls, value) -> str:
+        if ".txt" not in value:
+            raise ValueError("The file must be in .txt format")
+        return value
+
     @model_validator(mode="after")
     def validate_maze(self) -> Self:
         x, y = map(int, self.ENTRY.split(","))
