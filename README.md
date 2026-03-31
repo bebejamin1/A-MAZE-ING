@@ -269,30 +269,20 @@ Explication de l'algorithme BFS (Breadth-First Search) en détail:
 
 Le fichier de sortie `maze.txt` contient: l'hexadécimal du labyrinthe avec l'entrée, la sortie et le chemin de résolution du labyrinthe
 ```
-d5513913953951555553
-9552eaaac3c6ba95553e
-ad5696ac3c392ac553c3
-83956969696eac513c3a
-aac396ba96914396e96a
-ac52ab86abaad2a956ba
-abbeac47ac2c3ec6916a
-aac3c553c3c7c1552a96
-c43c53f83afff857aec3
-93c17afec057fa95293a
-ae9696fffafffac3eac2
-a947ad13fafd507c3c3e
-8695696afafffe952bc3
-a96d543c3ad1516d4292
-ac5539696c5696953aae
-8579683c553d47abaec3
-a93abaa953c3956ac53a
-aac6c6ac7a96853853c2
-aa93956956c3c7a83c7a
-ec6c6d545554556ec556
+D55539513B
+9513807AC2
+A900429696
+AA843C6BC3
+E80141387A
+96C0528692
+85543A8502
+AD53A86D02
+C53AA8156A
+D546C46D56
 
-2,6
-19,19
-SESEESSWSSWWSWSEEESWSSWNWSSSENESENEENNNWNENWNENESS....
+0,0
+9,9
+EEEESSWSESEESSEEESSS
 ```
 ---
 
