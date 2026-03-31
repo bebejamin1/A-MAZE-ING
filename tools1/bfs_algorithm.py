@@ -1,94 +1,70 @@
+from typing import Final
 
-from collections import deque
-from typing import List, Tuple
+Coords = tuple[int, int]
 
 
-# *****************************************************************************
-# *                            neighbors()                                    *
-# *              Check to see if any neighbors are around                     *
+def is_valid_neighbor(grid: list[list[int]], x: int, y: int,
+                      nx: int, ny: int, w: int, h: int) -> bool:
 
-def is_valid_neighbor(grid: List[List[int]], current_x: int, current_y: int,
-                      next_x: int, next_y: int,
-                      width: int, height: int) -> bool:
+    if not (0 <= nx < w and 0 <= ny < h):
+        return False
 
-    is_within_bounds = 0 <= next_x < width and 0 <= next_y < height
-    if (not is_within_bounds):
-        return (False)
+    dx: int = nx - x
+    dy: int = ny - y
 
-    direction_offset_x = next_x - current_x
-    direction_offset_y = next_y - current_y
-
-    direction_to_wall_bit = {
+    bits: Final[dict[Coords, int]] = {
         (0, -1): 1,
         (1, 0): 2,
         (0, 1): 4,
         (-1, 0): 8
     }
 
-    direction = (direction_offset_x, direction_offset_y)
-    if (direction not in direction_to_wall_bit):
-        return (False)
+    wall_bit: int = bits.get((dx, dy), 0)
 
-    wall_bit = direction_to_wall_bit[direction]
-    has_wall = grid[current_y][current_x] & wall_bit != 0
-
-    return (not has_wall)
+    return (grid[y][x] & wall_bit) == 0
 
 
-# *****************************************************************************
-# *                            find_way()                                     *
-# *                   Find your way through the maze                          *
+def find_way(grid: list[list[int]], start: Coords,
+             finish: Coords, width: int, height: int) -> list[str]:
 
-def find_way(grid: List[List[int]], start: Tuple[int, int],
-             finish: Tuple[int, int], width: int, height: int) -> List[str]:
+    queue: list[Coords] = [start]
 
-    directions = [
-        (0, -1, 'N'),
-        (1, 0, 'E'),
-        (0, 1, 'S'),
-        (-1, 0, 'W')
+    path_data: dict[Coords, tuple[Coords | None, str]] = {
+        start: (None, "")
+    }
+
+    moves: Final[list[tuple[int, int, str]]] = [
+        (0, -1, 'N'), (1, 0, 'E'), (0, 1, 'S'), (-1, 0, 'W')
     ]
 
-    start_x, start_y = start
-    finish_x, finish_y = finish
+    head: int = 0
+    while head < len(queue):
+        curr: Coords = queue[head]
+        head += 1
 
-    frontier = deque([(start_x, start_y)])
-    position_to_parent = {(start_x, start_y): None}
-    position_to_direction = {(start_x, start_y): None}
-
-    while (frontier):
-        current_x, current_y = frontier.popleft()
-
-        if ((current_x, current_y) == (finish_x, finish_y)):
+        if curr == finish:
             break
 
-        for offset_x, offset_y, direction_name in directions:
-            next_x = current_x + offset_x
-            next_y = current_y + offset_y
-            next_position = (next_x, next_y)
+        curr_x, curr_y = curr
+        for dx, dy, name in moves:
+            nx, ny = curr_x + dx, curr_y + dy
+            neighbor: Coords = (nx, ny)
 
-            is_unvisited = next_position not in position_to_parent
-            is_accessible = is_valid_neighbor(grid, current_x, current_y,
-                                              next_x, next_y, width, height)
+            if neighbor not in path_data and is_valid_neighbor(grid, curr_x,
+                                                               curr_y, nx, ny,
+                                                               width, height):
+                path_data[neighbor] = (curr, name)
+                queue.append(neighbor)
 
-            if is_unvisited and is_accessible:
-                position_to_parent[next_position] = (current_x, current_y)
-                position_to_direction[next_position] = direction_name
-                frontier.append(next_position)
-
-    finish_position = (finish_x, finish_y)
-    if (finish_position not in position_to_parent):
+    if finish not in path_data:
         return []
 
-    path_directions = []
-    current_position = finish_position
+    path: list[str] = []
+    current_pos: Coords | None = finish
 
-    while (current_position != (start_x, start_y)):
-        parent_position = position_to_parent[current_position]
-        direction_to_parent = position_to_direction[current_position]
-        path_directions.append(direction_to_parent)
-        current_position = parent_position
+    while current_pos is not None and current_pos != start:
+        parent, direction = path_data[current_pos]
+        path.append(direction)
+        current_pos = parent
 
-    path_directions.reverse()
-
-    return (path_directions)
+    return path[::-1]

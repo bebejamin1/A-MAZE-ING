@@ -1,26 +1,29 @@
 
-from typing import Optional, Any
+from typing import Union, Any
 
 from maze_algorithm.growing_tree import GrowTree
 from maze_algorithm.defective_maze import Deficient
 from tools1.bfs_algorithm import find_way
 
-import numpy as np
 
 red = "\033[31m\033[5m\033[1m"
 reset = "\033[0m"
 
 
-def output(width, height, start: tuple[int], finish: tuple[int],
-           perfect: list[str], name_file: str, seed: Optional[Any]) -> None:
+def output(width, height, start: tuple[int, int], finish: tuple[int, int],
+           perfect: bool, name_file: str, seed: Any | None) -> None:
+
+    maze_gen: Union[GrowTree, Deficient]
 
     if (perfect):
-        maze = GrowTree(width, height, start, finish, perfect, seed)
+        maze_gen = GrowTree(width, height, start, finish, perfect, seed)
     else:
-        maze = Deficient(width, height, start, finish, perfect, seed)
+        maze_gen = Deficient(width, height, start, finish, perfect, seed)
 
-    grid = grid = np.array([[15 for _ in range(width)] for _ in range(height)])
-    grid = maze.maze(grid)
+    grid_start: list[list[int]] = [[15 for _ in range(width)]
+                                   for _ in range(height)]
+
+    grid: list[list[int]] = maze_gen.maze(grid_start)
 
     if (grid[start[1]][start[0]] == 15):
         entry = f"{0},{0}"

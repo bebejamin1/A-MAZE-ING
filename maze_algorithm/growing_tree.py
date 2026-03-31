@@ -1,4 +1,5 @@
 
+from typing import Any
 
 import numpy as np
 import random
@@ -7,8 +8,8 @@ import random
 class GrowTree():
 
     def __init__(self, width: int, height: int,
-                 entry: tuple[int], finish: tuple[int],
-                 perfect: bool, seed: str) -> None:
+                 entry: tuple[int, int], finish: tuple[int, int],
+                 perfect: bool, seed: Any | None) -> None:
 
         self.width = width
         self.height = height
@@ -16,6 +17,10 @@ class GrowTree():
         self.finish = finish
         self.perfect = perfect
         self.seed = seed
+
+# *****************************************************************************
+# *                          print_fortytwo()                                 *
+# *          Set the boxes to negative so you can place the 42                *
 
     def print_fortytwo(self, grid: list[list[int]],
                        state: str) -> list[list[int]]:
@@ -47,6 +52,10 @@ class GrowTree():
 
         return (grid)
 
+# *****************************************************************************
+# *                          look_neighbor()                                  *
+# *           Check which tile is empty or break a random wall                *
+
     def look_neighbor(self, grid: list[list[int]], x1, y1) -> list:
 
         x_axes: list[int] = [0, 1, 0, -1]
@@ -64,18 +73,21 @@ class GrowTree():
 
         return (virgin_neighbor)
 
-    def maze(self, grid) -> list[list[int]]:
+# *****************************************************************************
+# *                            base growin_tree()                             *
+# *     générer un labyrinthe à l'aide de l'algorithme « growing tree »       *
+
+    def maze(self, grid_start) -> list[list[int]]:
 
         if (self.seed):
             random.seed(self.seed)
 
-        grid: list[list[int]] = self.print_fortytwo(grid, "before")
+        grid: list[list[int]] = self.print_fortytwo(grid_start, "before")
 
-        x: int = self.entry[0]
-        y: int = self.entry[1]
+        x, y = self.entry
 
         parkour: list[tuple[int, int]] = [(x, y)]
-        mouv: list[str, tuple[int]] = {
+        mouv: dict[str, tuple[int, int, int, int]] = {
             "N": (0, -1, 1, 4),
             "E": (1, 0, 2, 8),
             "S": (0, 1, 4, 1),
@@ -99,5 +111,5 @@ class GrowTree():
                 parkour.pop()
                 x, y = parkour[-1]
 
-        grid: list[list[int]] = self.print_fortytwo(grid, "after")
-        return (grid)
+        grid_finish: list[list[int]] = self.print_fortytwo(grid, "after")
+        return (grid_finish)

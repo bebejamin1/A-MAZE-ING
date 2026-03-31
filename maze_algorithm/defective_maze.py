@@ -7,8 +7,8 @@ import random
 class Deficient():
 
     def __init__(self, width: int, height: int,
-                 entry: tuple[int], finish: tuple[int],
-                 perfect: bool, seed: str) -> None:
+                 entry: tuple[int, int], finish: tuple[int, int],
+                 perfect: bool, seed: Any | str) -> None:
 
         self.width = width
         self.height = height
@@ -54,8 +54,8 @@ class Deficient():
 
     def look_neighbor(self, grid: list[list[int]], x1: int, y1: int) -> list:
 
-        directions: list[tuple[Any]] = [(0, -1, "N"), (1, 0, "E"),
-                                        (0, 1, "S"), (-1, 0, "W")]
+        directions: list[tuple[int, int, str]] = [(0, -1, "N"), (1, 0, "E"),
+                                                  (0, 1, "S"), (-1, 0, "W")]
         virgin_neighbor: list[str] = []
 
         for x, y, c in directions:
@@ -78,15 +78,14 @@ class Deficient():
 # *                       base deficient_maze()                               *
 # *       Generate the deficient maze algorithm for perfect = false           *
 
-    def maze(self, grid: list[list[int]]) -> list[list[int]]:
+    def maze(self, grid_start: list[list[int]]) -> list[list[int]]:
 
         if self.seed:
             random.seed(self.seed)
 
-        grid: list[list[int]] = self.print_fortytwo(grid, "before")
+        grid: list[list[int]] = self.print_fortytwo(grid_start, "before")
 
-        x: int = self.entry[0]
-        y: int = self.entry[1]
+        x, y = self.entry
 
         parkour: list[tuple[int, int]] = [(x, y)]
         mouv = {
