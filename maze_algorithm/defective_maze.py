@@ -52,7 +52,8 @@ class Deficient():
 # *                          look_neighbor()                                  *
 # *           Check which tile is empty or break a random wall                *
 
-    def look_neighbor(self, grid: list[list[int]], x1: int, y1: int) -> list:
+    def look_neighbor(self, grid: list[list[int]], x1: int,
+                      y1: int) -> list[str]:
 
         directions: list[tuple[int, int, str]] = [(0, -1, "N"), (1, 0, "E"),
                                                   (0, 1, "S"), (-1, 0, "W")]

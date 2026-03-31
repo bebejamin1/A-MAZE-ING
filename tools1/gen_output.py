@@ -10,8 +10,9 @@ red = "\033[31m\033[5m\033[1m"
 reset = "\033[0m"
 
 
-def output(width, height, start: tuple[int, int], finish: tuple[int, int],
-           perfect: bool, name_file: str, seed: Any | None) -> None:
+def output(width: int, height: int, start: tuple[int, int],
+           finish: tuple[int, int], perfect: bool, name_file: str,
+           seed: Any | None) -> None:
 
     maze_gen: Union[GrowTree, Deficient]
 

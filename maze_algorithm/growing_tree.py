@@ -56,7 +56,8 @@ class GrowTree():
 # *                          look_neighbor()                                  *
 # *           Check which tile is empty or break a random wall                *
 
-    def look_neighbor(self, grid: list[list[int]], x1, y1) -> list:
+    def look_neighbor(self, grid: list[list[int]],
+                      x1: int, y1: int) -> list[str]:
 
         x_axes: list[int] = [0, 1, 0, -1]
         y_axes: list[int] = [-1, 0, 1, 0]
@@ -77,7 +78,7 @@ class GrowTree():
 # *                            base growin_tree()                             *
 # *     générer un labyrinthe à l'aide de l'algorithme « growing tree »       *
 
-    def maze(self, grid_start) -> list[list[int]]:
+    def maze(self, grid_start: list[list[int]]) -> list[list[int]]:
 
         if (self.seed):
             random.seed(self.seed)
