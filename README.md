@@ -1,20 +1,37 @@
 # 🏰 A-MAZE-ING
 
+## 👥 Auteurs
+
+This project has been created as part of the 42 curriculum by Fleur Caval 🌸 and Benjamin Beaurain 🥕.
+
 ## Description
 
 Un générateur de labyrinthes interactif en Python utilisant l'algorithme Growing Tree. Le programme génère des labyrinthes parfaits ou imparfaits et permet de visualiser le chemin de l'entrée à la sortie.
+
+## Rôles
+
+Benjamin Beaurain : Implémentation de l'algorithme Growing Tree et logique des labyrinthes imparfaits.
+
+Fleur Caval : Système de configuration, interface utilisateur (menu) et visualisation ASCII.
+
+### Rétrospective
+* **Planning** : Initialement prévu sur 2 semaines, nous avons respecté notre délai personnel. Bien que nous avons dû laisser les bonus de côté.
+* **Améliorations** : une visualisation MLX a été envisagé pour un meilleur rendu visuel. Mais celui ci a été abandonné pour le débuggage plus efficace de l'ASCII.
+
+## 🧩 Réutilisabilité
+Les modules situés dans `maze_algorithm/` sont totalement indépendants de l'interface. Ils peuvent être réutilisés dans n'importe quel projet Python en important la classe `MazeGenerator`. De même, `bfs_algorithm.py` est un solveur de grille générique.
 
 ---
 
 ## 📋 Table des matières
 
+- [Auteurs](#auteurs)
 - [Fonctionnalités](##fonctionnalités)
 - [Installation](##installation)
 - [Utilisation](##utilisation)
 - [Configuration](##configuration)
 - [Architecture](##architecture)
 - [Algorithmes](#algorithmes)
-- [Auteurs](#auteurs)
 
 ---
 
@@ -28,17 +45,18 @@ Un générateur de labyrinthes interactif en Python utilisant l'algorithme Growi
 - ✅ Système de couleurs personnalisable
 - ✅ Gestion des configurations via fichier `config.txt`
 
-**À COMPLÉTER** : Ajoutez d'autres fonctionnalités si elles existent.
-
 ---
 
 ## 🚀 Installation
 
 ### Prérequis
 
-```bash
+```Contenu du requirement.txt
 - Python 3.10+
-- pip ou venv
+- pydantic>=2.12.5
+- flake8>=7.3.0
+- numpy>=1.26
+- typing-extensions>=4.12
 ```
 
 ### Étapes
@@ -49,34 +67,28 @@ Un générateur de labyrinthes interactif en Python utilisant l'algorithme Growi
    cd A-MAZE-ING
    ```
 
-2. **Créer un environnement virtuel**
+2. **Lancement**
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   make
    ```
 
-3. **Installer les dépendances**
-   ```bash
-   pip install -r requirement.txt
-   ```
+Le MakeFile vérifie que les dépendances présentent dans le requirement.txt sont bien installées. Elle permet aussi de lancer la venv. 
+Après cela, make lance python3 a-maze-ing config.txt
 
-**À COMPLÉTER** : Ajoutez des instructions spécifiques si nécessaire.
+## 🧪 Commandes utiles
+
+### Développement
+
+```bash
+make lint          # Vérifier le code avec flake8 et mypy
+make debug         # Lancer en mode débogage
+make clean         # Nettoyer les fichiers __pycache__
+make install       # Installer les dépendances
+```
 
 ---
 
 ## 💻 Utilisation
-
-### Lancement du programme
-
-```bash
-make run
-```
-
-ou directement :
-
-```bash
-python3 a_maze_ing.py config.txt
-```
 
 ### Menu interactif
 
@@ -89,7 +101,31 @@ Lors du lancement, vous verrez le menu suivant :
 4 - Quit
 ```
 
-**À COMPLÉTER** : Détaillez chaque option du menu.
+1. **Re-generate a new maze**
+   ```bash
+   1
+   Génère un nouveau labyrinthe. Si la seed est remplie, le labyrinthe restera le même que généré     au début
+   ```
+
+2. **Show/Hide path from entry to exit**
+   ```bash
+   2
+   Montre le chemin entre l'entrée et la sortie. L'entrée est caractérisé par "🟢". La sortie par     "🏁". Le chemin quant à lui par "⭐".
+   Le mode d'affichage choisi reste actif dans les autres fonctionnalités.
+   Si l'entrée ou la sortie se trouve sur l'affichage du 42, ils seront déplacés.
+   ```
+
+3. **Rotate maze colors**
+   ```bash
+   3
+   Permet de changer la couleur des murs du labyrinthe. Le menu affiche les 7 couleurs                disponibles. Par défaut, au lancement, le labyrinthe est blanc. Si la couleur est changée, elle    persistera dans les autres paramètres.
+   ```
+   
+4. **Quit**
+   ```bash
+   4
+   Quitte le programme.
+   ```
 
 ---
 
@@ -107,7 +143,42 @@ PERFECT=True          # Labyrinthe parfait (True/False)
 SEED=                 # Graine aléatoire (optionnel)
 ```
 
-**À COMPLÉTER** : Expliquez les impacts de chaque paramètre.
+1. **WIDTH**
+   ```bash
+   Largeur du labyrinthe. Le minimum est de 2. Le maximum est de 50.
+   ```
+   
+2. **HEIGHT**
+   ```bash
+   Longueur du labyrinthe. Le minimum est de 2. Le maximum est de 50.
+   ```
+
+3. **ENTRY**
+   ```bash
+   L'entrée du chemin. Elle ne peut être en dehors de la taille du labyrinthe.
+   ```
+
+4. **EXIT**
+   ```bash
+   La sortie du chemin. Elle ne peut être en dehors de la taille du labyrinthe.
+   ```
+
+5. **OUTPUT_FILE**
+   ```bash
+   Fichier de sortie de l'algorithme. Elle doit se terminer par ".txt"
+   ```
+
+6. **PERFECT**
+   ```bash
+   Se personnalise par un True ou False.
+   True = labyrinthe parfait, c'est-à-dire qu'il n'existe qu'un seul chemin entre l'entrée            et la sortie.
+   False = labyrinthe imparfait, c'est-à-dire qu'il existe plusieurs chemins entre l'entrée et la     sortie. L'algorithme affichera le chemin le plus court.
+   ```
+
+7. **SEED**
+   ```bash
+   Paramètre optionnel. Si cette variable est remplie. Le labyrinthe sera le même, grâce à            l'identité apposé avec cette valeur, même si nous le régénérons. 
+   ```
 
 ---
 
@@ -148,6 +219,8 @@ A-MAZE-ING/
 
 Regarder l'algorithme: https://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm
 
+Choix : cet algorithme a été choisi pour sa flexibilité et pour la qualité "organique" des labyrinthes produits. Nous l'avons trouvé inspirant. 
+
 Explication de l'algorithme Growing Tree en détail:
 
 1. Partir d'une cellule de départ...
@@ -171,17 +244,6 @@ Explication de l'algorithme BFS (Breadth-First Search) en détail:
 3. **Fin** : Si la file se vide sans avoir atteint la sortie, aucun chemin n'existe. Sinon, le chemin est reconstruit en utilisant les données de parent stockées.
 
 ---
-
-## 🧪 Commandes utiles
-
-### Développement
-
-```bash
-make lint          # Vérifier le code avec flake8 et mypy
-make debug         # Lancer en mode débogage
-make clean         # Nettoyer les fichiers __pycache__
-make install       # Installer les dépendances
-```
 
 ## 📊 Format de sortie
 
@@ -214,7 +276,13 @@ SESEESSWSSWWSWSEEESWSSWNWSSSENESENEENNNWNENWNENESS....
 ```
 ---
 
-## 👥 Auteurs
+## 🩼 Utilisation de l'IA
 
-- Fleur Caval
-- Benjamin Beaurain
+L'IA a été utilisé pour aider dans la réalisation des docsting et des typing, ainsi que pour générer le squelette de ce README.md. Dans certains cas, elle a pu être utilisé pour débugger. 
+
+## ​​📚 Ressources
+
+Growing tree: https://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm bfs: https://www.datacamp.com/tutorial/breadth-first-search-in-python
+Compréhension binaire affichage : https://stackoverflow.com/questions/57610416/how-to-read-a-maze-from-an-image-and-convert-it-to-binary-values-in-python + https://realpython.com/videos/python-maze-binary-file/
+Couleurs ASCII : https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
+Dessin ASCII Pacman : https://www.asciiart.eu/art/a7c9e36489bc23e9
