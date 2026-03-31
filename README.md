@@ -13,14 +13,15 @@ Un générateur de labyrinthes interactif en Python utilisant l'algorithme Growi
 ## 🪼​ Rôles
 
 Benjamin Beaurain : Implémentation de l'algorithme Growing Tree et logique des labyrinthes imparfaits.
-
 Fleur Caval : Système de configuration, interface utilisateur (menu) et visualisation ASCII.
 
 ### 🔥 Rétrospective
+
 * **Planning** : Initialement prévu sur 2 semaines, nous avons respecté notre délai personnel. Bien que nous avons dû laisser les bonus de côté.
 * **Améliorations** : une visualisation MLX a été envisagé pour un meilleur rendu visuel. Mais celui ci a été abandonné pour le débuggage plus efficace de l'ASCII.
 
 ## 🧩 Réutilisabilité
+
 Les modules situés dans `maze_algorithm/` sont totalement indépendants de l'interface. Ils peuvent être réutilisés dans n'importe quel projet Python en important la classe `MazeGenerator`. De même, `bfs_algorithm.py` est un solveur de grille générique.
 
 ---
