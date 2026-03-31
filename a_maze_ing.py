@@ -36,26 +36,39 @@ if __name__ == "__main__":
     print()
 
     print('\033[43m  WELCOME !  \033[0m'.center(68, " "))
+
     show_path = False
     wall_color = "\033[37m"
+
+    coord = get_tuple(config.ENTRY, config.EXIT)
+    output(config.WIDTH, config.HEIGHT, coord[0], coord[1],
+    config.PERFECT, config.OUTPUT_FILE, config.SEED)
+    maze, entry, exit_coord, path = maze_data_extract(
+                    config.OUTPUT_FILE)
+
     while True:
         print()
-        print("1 - Re-generate a new maze")
-        print("2 - Show/Hide path from entry to exit")
-        print("3 - Rotate maze colors")
-        print("4 - Quit")
+        print("1 - Show a maze")
+        print("2 - Re-generate a new maze")
+        print("3 - Show/Hide path from entry to exit")
+        print("4 - Rotate maze colors")
+        print("5 - Quit")
         try:
             choice = int(input("\n" + "\033[40m What do you want ? \033[0m" +
                                ": "))
+
             if choice == 1:
+               draw_walls(maze, config, path, wall_color, show_path, entry,
+                           exit_coord)
+            elif choice == 2:
                 coord = get_tuple(config.ENTRY, config.EXIT)
                 output(config.WIDTH, config.HEIGHT, coord[0], coord[1],
                        config.PERFECT, config.OUTPUT_FILE, config.SEED)
                 maze, entry, exit_coord, path = maze_data_extract(
                     config.OUTPUT_FILE)
                 draw_walls(maze, config, path, wall_color, show_path, entry,
-                           exit_coord)
-            elif choice == 2:
+                                       exit_coord)
+            elif choice == 3:
                 if show_path is False:
                     show_path = True
                 else:
@@ -64,13 +77,13 @@ if __name__ == "__main__":
                     config.OUTPUT_FILE)
                 draw_walls(maze, config, path, wall_color, show_path, entry,
                            exit_coord)
-            elif choice == 3:
+            elif choice == 4:
                 wall_color = get_wall_color()
                 maze, entry, exit_coord, path = maze_data_extract(
                     config.OUTPUT_FILE)
                 draw_walls(maze, config, path, wall_color, show_path, entry,
                            exit_coord)
-            elif choice == 4:
+            elif choice == 5:
                 print()
                 print("  ✈︎ ✈︎ ✈︎ ✈︎ ✈︎ ✈︎ ✈︎".center(70, " "))
                 print("Goodbye !".center(66, " "))

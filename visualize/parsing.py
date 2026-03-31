@@ -134,13 +134,23 @@ def extract_config(file_path: str) -> Dict[str, str]:
                 line = line.strip()
                 if not line or line.startswith("#"):
                     continue
-                if "=" in line:
-                    key, value = line.split("=", 1)
-                    config[key] = value
 
-                else:
-                    print(f"Error: Invalid line format: {line}")
+                if line.count("=") != 1:
+                    print(f"\nError: Invalid line format (must contain exactly"
+                          f" one '='): {line}")
                     sys.exit()
+
+                key, value = map(str.strip, line.split("=", 1))
+                if not key:
+                    print(f"\nError: Invalid key in line: {line}")
+                    sys.exit()
+
+                if value == "" and key != "SEED":
+                    print(f"\nError: Invalid value for key '{key}' in "
+                          f"line: {line}")
+                    sys.exit()
+
+                config[key] = value
 
         mandatory_keys = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE",
                           "PERFECT"]
