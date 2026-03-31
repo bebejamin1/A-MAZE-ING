@@ -1,4 +1,4 @@
-[Fichier_Animated_BFS.html](https://github.com/user-attachments/files/26373937/Fichier_Animated_BFS.html)This project has been created as part of the 42 curriculum by bbeaurai, fcaval
+This project has been created as part of the 42 curriculum by bbeaurai, fcaval
 
 # 🏰 A-MAZE-ING
 
@@ -243,6 +243,7 @@ Explication de l'algorithme Growing Tree en détail:
 ---
 
 ### Recherche du chemin (BFS)
+
 ![bfs-gif](https://github.com/user-attachments/assets/fbe7e56e-70f0-4392-972d-a69e3d67e4af)
 
 Explication de l'algorithme BFS (Breadth-First Search) en détail:
