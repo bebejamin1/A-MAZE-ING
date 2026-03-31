@@ -1,149 +1,125 @@
 
-from typing import Optional, Any
+from typing import Any
 
 import random
 
 
-# *****************************************************************************
-# *                        print_fortytwo()                                   *
-# *             generates 42 if the size is large enough                      *
+class Deficient():
 
-def print_fortytwo(grid: list[list[int]], finish: str,
-                   width: int, height: int) -> list[list[int]]:
-    """Write or clear the decorative 42 pattern in the maze grid.
+    def __init__(self, width: int, height: int,
+                 entry: tuple[int], finish: tuple[int],
+                 perfect: bool, seed: str) -> None:
 
-    Args:
-        grid: Maze grid.
-        finish: Phase marker, either "before" or "after".
-        width: Maze width.
-        height: Maze height.
-
-    Returns:
-        Updated maze grid.
-    """
-
-    if (width >= 11 and height >= 9):
-
-        w: int = int(round(((width - 7) / 2), 0))
-        h: int = int(round(((height - 5) / 2), 0))
-
-        paterns: list[tuple[int, int]] = [
-            (0, 0), (1, 0), (1, 0), (0, 1), (0, 1), (1, 0), (1, 0),  # 4
-            (-4, 2), (0, 1), (0, 1), (1, 0), (1, 0),  # 2
-            (0, -1), (0, -1), (1, 0), (1, 0), (0, 1), (0, 1)]  # 2
-
-        if (finish == "before"):
-            for p in paterns:
-                h += p[0]
-                w += p[1]
-                grid[h][w] = -42
-
-        elif (finish == "after"):
-            for y in range(len(grid)):
-                for x in range(len(grid[y])):
-                    if (grid[y][x] == -42):
-                        grid[y][x] = 15
-
-    return (grid)
-
+        self.width = width
+        self.height = height
+        self.entry = entry
+        self.finish = finish
+        self.perfect = perfect
+        self.seed = seed
 
 # *****************************************************************************
-# *                         look_neighbor()                                   *
-# *          Check to see if the current position can move                    *
+# *                          print_fortytwo()                                 *
+# *          Set the boxes to negative so you can place the 42                *
 
-def look_neighbor(grid: list[list[int]], x1: int, y1: int,
-                  w: int, h: int) -> list:
-    """Collect neighboring directions for defective maze generation.
+    def print_fortytwo(self, grid: list[list[int]],
+                       state: str) -> list[list[int]]:
 
-    Args:
-        grid: Maze grid.
-        x1: Current x-coordinate.
-        y1: Current y-coordinate.
-        w: Maze width.
-        h: Maze height.
+        if (self.width >= 11 and self.height >= 9):
 
-    Returns:
-        List of candidate movement directions.
-    """
+            w: int = int(round(((self.width - 7) / 2), 0))
+            h: int = int(round(((self.height - 5) / 2), 0))
 
-    directions: list[tuple[Any]] = [(0, -1, "N"), (1, 0, "E"),
-                                    (0, 1, "S"), (-1, 0, "W")]
-    virgin_neighbor: list[str] = []
+            paterns: list[tuple[int, int]] = [
+                (0, 0), (1, 0), (1, 0), (0, 1), (0, 1), (1, 0), (1, 0),  # 4
+                (-4, 2), (0, 1), (0, 1), (1, 0), (1, 0),  # 2
+                (0, -1), (0, -1), (1, 0), (1, 0), (0, 1), (0, 1)]  # 2
 
-    for x, y, c in directions:
-        nx, ny = x1 + x, y1 + y
+            if (state == "before"):
+                for p in paterns:
+                    h += p[0]
+                    w += p[1]
+                    grid[h][w] = -42
 
-        if ((nx >= 0 and nx < w) and (ny >= 0 and ny < h)):
+            elif (state == "after"):
+                for y in range(len(grid)):
+                    for x in range(len(grid[y])):
+                        if (grid[y][x] == -42):
+                            grid[y][x] = 15
 
-            if (grid[ny][nx] == 15 and grid[ny][nx] != -42):
-
-                virgin_neighbor.append(c)
-
-            elif (grid[ny][nx] != -42 and random.random() < 0.08):
-
-                virgin_neighbor.append(c)
-
-    return (virgin_neighbor)
-
+        return (grid)
 
 # *****************************************************************************
-# *                     base deficient_maze()                                 *
-# *     Generate the deficient maze algorithm for perfect = false             *
+# *                          look_neighbor()                                  *
+# *           Check which tile is empty or break a random wall                *
 
-def deficient_maze(grid: list[list[int]], width: int, height: int,
-                   entry: tuple[int, int],
-                   seed: Optional[str]) -> list[list[int]]:
-    """Generate an imperfect maze variant with occasional extra openings.
+    def look_neighbor(self, grid: list[list[int]], x1: int, y1: int) -> list:
 
-    Args:
-        grid: Initial maze grid.
-        width: Maze width.
-        height: Maze height.
-        entry: Starting coordinate for generation.
-        seed: Optional random seed.
+        directions: list[tuple[Any]] = [(0, -1, "N"), (1, 0, "E"),
+                                        (0, 1, "S"), (-1, 0, "W")]
+        virgin_neighbor: list[str] = []
 
-    Returns:
-        Generated maze grid.
-    """
+        for x, y, c in directions:
+            nx, ny = x1 + x, y1 + y
 
-    if seed:
-        random.seed(seed)
+            if ((nx >= 0 and nx < self.width)
+                    and (ny >= 0 and ny < self.height)):
 
-    grid = print_fortytwo(grid, "before", width, height)
-    x, y = entry
-    parkour: list[tuple[int, int]] = [(x, y)]
+                if (grid[ny][nx] == 15 and grid[ny][nx] != -42):
 
-    mouv = {
-        "N": (0, -1, 1, 4),
-        "E": (1, 0, 2, 8),
-        "S": (0, 1, 4, 1),
-        "W": (-1, 0, 8, 2)
-    }
+                    virgin_neighbor.append(c)
 
-    while parkour:
-        x, y = parkour[-1]
-        neighbors = look_neighbor(grid, x, y, width, height)
+                elif (grid[ny][nx] != -42 and random.random() < 0.08):
 
-        if (neighbors):
-            direction = random.choice(neighbors)
-            dx, dy, bit_c, bit_v = mouv[direction]
-            nx, ny = x + dx, y + dy
+                    virgin_neighbor.append(c)
 
-            if (grid[ny][nx] == 15):
-                grid[y][x] &= ~bit_c
-                grid[ny][nx] &= ~bit_v
-                parkour.append((nx, ny))
+        return (virgin_neighbor)
 
-            else:
+# *****************************************************************************
+# *                       base deficient_maze()                               *
+# *       Generate the deficient maze algorithm for perfect = false           *
 
-                if (grid[y][x] & bit_c):
+    def maze(self, grid: list[list[int]]) -> list[list[int]]:
+
+        if self.seed:
+            random.seed(self.seed)
+
+        grid: list[list[int]] = self.print_fortytwo(grid, "before")
+
+        x: int = self.entry[0]
+        y: int = self.entry[1]
+
+        parkour: list[tuple[int, int]] = [(x, y)]
+        mouv = {
+            "N": (0, -1, 1, 4),
+            "E": (1, 0, 2, 8),
+            "S": (0, 1, 4, 1),
+            "W": (-1, 0, 8, 2)
+        }
+
+        while parkour:
+            x, y = parkour[-1]
+            neighbors = self.look_neighbor(grid, x, y)
+
+            if (neighbors):
+                direction = random.choice(neighbors)
+                dx, dy, bit_c, bit_v = mouv[direction]
+                nx, ny = x + dx, y + dy
+
+                if (grid[ny][nx] == 15):
                     grid[y][x] &= ~bit_c
                     grid[ny][nx] &= ~bit_v
+                    parkour.append((nx, ny))
 
-        else:
-            parkour.pop()
-            if parkour:
-                x, y = parkour[-1]
+                else:
 
-    grid = print_fortytwo(grid, "after", width, height)
-    return (grid)
+                    if (grid[y][x] & bit_c):
+                        grid[y][x] &= ~bit_c
+                        grid[ny][nx] &= ~bit_v
+
+            else:
+                parkour.pop()
+                if parkour:
+                    x, y = parkour[-1]
+
+        grid = self.print_fortytwo(grid, "after")
+        return (grid)

@@ -1,31 +1,26 @@
 
 from typing import Optional, Any
 
-from maze_algorithm.growing_tree import grow_tree
+from maze_algorithm.growing_tree import GrowTree
+from maze_algorithm.defective_maze import Deficient
 from tools1.bfs_algorithm import find_way
+
 import numpy as np
 
 red = "\033[31m\033[5m\033[1m"
 reset = "\033[0m"
 
 
-def output(width: int, height: int, start: tuple[int, int],
-           finish: tuple[int, int], perfect: bool, name_file: str,
-           seed: Optional[Any]) -> None:
-    """Generate a maze, solve it, and write output data to a file.
+def output(width, height, start: tuple[int], finish: tuple[int],
+           perfect: list[str], name_file: str, seed: Optional[Any]) -> None:
 
-    Args:
-        width: Maze width.
-        height: Maze height.
-        start: Start coordinate.
-        finish: End coordinate.
-        perfect: Whether to generate a perfect maze.
-        name_file: Output file path.
-        seed: Optional random seed.
-    """
+    if (perfect):
+        maze = GrowTree(width, height, start, finish, perfect, seed)
+    else:
+        maze = Deficient(width, height, start, finish, perfect, seed)
 
-    gr = np.array([[15 for _ in range(width)] for _ in range(height)])
-    grid = grow_tree(gr, width, height, start, perfect, seed)
+    grid = grid = np.array([[15 for _ in range(width)] for _ in range(height)])
+    grid = maze.maze(grid)
 
     if (grid[start[1]][start[0]] == 15):
         entry = f"{0},{0}"
@@ -45,7 +40,6 @@ def output(width: int, height: int, start: tuple[int, int],
 
     way = find_way(grid, (sx, sy), (fx, fy), width, height)
 
-    print(way)
     try:
         with open(name_file, "w") as f:
             for y, row in enumerate(grid):  # rangee
