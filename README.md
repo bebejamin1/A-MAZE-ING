@@ -148,16 +148,27 @@ A-MAZE-ING/
 
 Regarder l'algorithme: https://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm
 
-**À COMPLÉTER** : Expliquez l'algorithme Growing Tree en détail.
+Explication de l'algorithme Growing Tree en détail:
 
-Exemple : 
-L'algorithme Growing Tree fonctionne en deux phases principales :
 1. Partir d'une cellule de départ...
-2. Continuer jusqu'à obtenir un labyrinthe complet...
+2. Choisis des directions aléatoires
+3. Dans le cas où aucune direction n'est possible, cul de sac
+4. L'algorithme revient sur ses pas jusqu'à retrouver une direction
+5. L'algorithme s'arrête quand le chemin revient à sa position initiale
+
+---
 
 ### Recherche du chemin (BFS)
 
-**À COMPLÉTER** : Expliquez l'algorithme de recherche du chemin (Breadth-First Search).
+Explication de l'algorithme BFS (Breadth-First Search) en détail:
+
+1. **Initialisation** : Placer la cellule de départ dans une file d'attente (queue) et marquer cette cellule comme visitée.
+2. **Exploration niveau par niveau** : Tant que la file n'est pas vide :
+   - Retirer la cellule en tête de file (cellule actuelle).
+   - Si cette cellule est la sortie, reconstruire le chemin en remontant les parents.
+   - Sinon, explorer les quatre voisins possibles (haut, droite, bas, gauche) si ils sont valides (dans les limites du labyrinthe et sans mur).
+   - Pour chaque voisin non visité, le marquer comme visité, l'ajouter à la file, et enregistrer la cellule actuelle comme parent avec la direction.
+3. **Fin** : Si la file se vide sans avoir atteint la sortie, aucun chemin n'existe. Sinon, le chemin est reconstruit en utilisant les données de parent stockées.
 
 ---
 
@@ -171,12 +182,6 @@ make debug         # Lancer en mode débogage
 make clean         # Nettoyer les fichiers __pycache__
 make install       # Installer les dépendances
 ```
-
-### Tests
-
-**À COMPLÉTER** : Ajoutez la commande pour exécuter les tests si vous en avez.
-
----
 
 ## 📊 Format de sortie
 
