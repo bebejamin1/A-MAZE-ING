@@ -144,6 +144,9 @@ A-MAZE-ING/
 ## 🧮 Algorithmes
 
 ### Growing Tree (Croissance d'arbre)
+<img width="3000" height="2000" alt="1036 8" src="https://github.com/user-attachments/assets/160e18a4-819a-4801-b2f9-5ef0eb3fabe1" />
+
+Regarder l'algorithme: https://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm
 
 **À COMPLÉTER** : Expliquez l'algorithme Growing Tree en détail.
 
