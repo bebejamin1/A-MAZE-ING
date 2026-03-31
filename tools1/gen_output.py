@@ -62,7 +62,7 @@ def output(width: int, height: int, start: tuple[int, int],
         fx = finish[0]
         fy = finish[1]
 
-    way = find_way(grid, (sx, sy), (fx, fy), width, height)
+    way = find_way(grid, (sy, sx), (fx, fy), width, height)
 
     try:
         with open(name_file, "w") as f:

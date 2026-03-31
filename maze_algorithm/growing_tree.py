@@ -1,4 +1,3 @@
-
 from typing import Any
 
 import random
@@ -68,11 +67,15 @@ class GrowTree():
                     h += p[0]
                     w += p[1]
                     grid[h][w] = -1
+                    if (self.entry == (w, h)):
+                        self.entry = (0, 0)
+                    if (self.finish == (w, h)):
+                        self.entry = (height_int - 1, width_int - 1)
 
             elif (state == "after"):
                 for y in range(len(grid)):
                     for x in range(len(grid[y])):
-                        if (grid[y][x] == -1):
+                        if (grid[y][x] <= -1):
                             grid[y][x] = 15
 
         return (grid)
@@ -145,7 +148,7 @@ class GrowTree():
             "W": (-1, 0, 8, 2)
         }
 
-        while (path):
+        while any(15 in row for row in grid):
             neighbor: list[str] = self.look_neighbor(grid, x, y)
 
             if (neighbor):
