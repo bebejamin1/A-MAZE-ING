@@ -1,7 +1,6 @@
 
 from typing import Any
 
-import numpy as np
 import random
 
 
@@ -138,7 +137,7 @@ class GrowTree():
 
         x, y = self.entry
 
-        parkour: list[tuple[int, int]] = [(x, y)]
+        path: list[tuple[int, int]] = [(x, y)]
         mouv: dict[str, tuple[int, int, int, int]] = {
             "N": (0, -1, 1, 4),
             "E": (1, 0, 2, 8),
@@ -146,7 +145,7 @@ class GrowTree():
             "W": (-1, 0, 8, 2)
         }
 
-        while (np.max(grid) == 15):
+        while (path):
             neighbor: list[str] = self.look_neighbor(grid, x, y)
 
             if (neighbor):
@@ -156,12 +155,12 @@ class GrowTree():
 
                 grid[y][x] &= ~bits_dir
                 grid[ny][nx] &= ~bits_next
-                parkour.append((nx, ny))
+                path.append((nx, ny))
                 x, y = nx, ny
 
             else:
-                parkour.pop()
-                x, y = parkour[-1]
+                path.pop()
+                x, y = path[-1]
 
         grid_finish: list[list[int]] = self.print_fortytwo(grid, "after")
         return (grid_finish)

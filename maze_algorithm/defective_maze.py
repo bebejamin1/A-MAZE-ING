@@ -163,7 +163,7 @@ class Deficient():
 
         x, y = self.entry
 
-        parkour: list[tuple[int, int]] = [(x, y)]
+        path: list[tuple[int, int]] = [(x, y)]
         mouv = {
             "N": (0, -1, 1, 4),
             "E": (1, 0, 2, 8),
@@ -171,8 +171,8 @@ class Deficient():
             "W": (-1, 0, 8, 2)
         }
 
-        while parkour:
-            x, y = parkour[-1]
+        while (path):
+            x, y = path[-1]
             neighbors = self.look_neighbor(grid, x, y)
 
             if (neighbors):
@@ -183,7 +183,7 @@ class Deficient():
                 if (grid[ny][nx] == 15):
                     grid[y][x] &= ~bit_c
                     grid[ny][nx] &= ~bit_v
-                    parkour.append((nx, ny))
+                    path.append((nx, ny))
 
                 else:
 
@@ -192,9 +192,9 @@ class Deficient():
                         grid[ny][nx] &= ~bit_v
 
             else:
-                parkour.pop()
-                if parkour:
-                    x, y = parkour[-1]
+                path.pop()
+                if path:
+                    x, y = path[-1]
 
         grid = self.print_fortytwo(grid, "after")
         return (grid)
