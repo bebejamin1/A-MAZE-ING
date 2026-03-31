@@ -74,6 +74,10 @@ class Deficient():
 
         return (virgin_neighbor)
 
+# *****************************************************************************
+# *                              min_maze()                                   *
+# *                             if maze 2*2                                   *
+
     def min_maze(self, grid: list[list[int]]) -> list[list[int]]:
 
         grid[0][0] = 9
