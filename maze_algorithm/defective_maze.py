@@ -64,6 +64,10 @@ class Deficient():
                     h += p[0]
                     w += p[1]
                     grid[h][w] = -42
+                    if (self.entry == (w, h)):
+                        self.entry = (0, 0)
+                    if (self.finish == (w, h)):
+                        self.finish = (self.width - 1, self.height - 1)
 
             elif (state == "after"):
                 for y in range(len(grid)):

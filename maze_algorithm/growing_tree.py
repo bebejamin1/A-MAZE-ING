@@ -70,7 +70,7 @@ class GrowTree():
                     if (self.entry == (w, h)):
                         self.entry = (0, 0)
                     if (self.finish == (w, h)):
-                        self.entry = (height_int - 1, width_int - 1)
+                        self.finish = (self.width - 1, self.height - 1)
 
             elif (state == "after"):
                 for y in range(len(grid)):

@@ -69,6 +69,7 @@ def find_way(grid: list[list[int]], start: Coords,
     ]
 
     head: int = 0
+
     while (head < len(queue)):
         curr: Coords = queue[head]
         head += 1
@@ -81,8 +82,10 @@ def find_way(grid: list[list[int]], start: Coords,
             nx, ny = curr_x + dx, curr_y + dy
             neighbor: Coords = (nx, ny)
 
-            if (neighbor not in path_data and is_valid_neighbor(grid, curr_x,
-                                                                curr_y, nx, ny,
+            if (neighbor not in path_data and is_valid_neighbor(grid,
+                                                                curr_x,
+                                                                curr_y,
+                                                                nx, ny,
                                                                 width,
                                                                 height)):
                 path_data[neighbor] = (curr, name)

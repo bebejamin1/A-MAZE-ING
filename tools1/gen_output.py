@@ -46,33 +46,21 @@ def output(width: int, height: int, start: tuple[int, int],
 
     grid: list[list[int]] = maze_gen.maze(grid_start)
 
-    if (grid[start[1]][start[0]] == 15):
-        entry = f"{0},{0}"
-        sx = sy = 0
-    else:
-        entry = f"{start[0]},{start[1]}"
-        sx, sy = start
+    begin: str = f"{maze_gen.entry[0]},{maze_gen.entry[1]}"
 
-    if (grid[finish[1]][finish[0]] == 15):
-        end = f"{height - 1},{width - 1}"
-        fx = height - 1
-        fy = width - 1
-    else:
-        end = f"{finish[0]},{finish[1]}"
-        fx = finish[0]
-        fy = finish[1]
+    end: str = f"{maze_gen.finish[0]},{maze_gen.finish[1]}"
 
-    way = find_way(grid, (sy, sx), (fx, fy), width, height)
+    way = find_way(grid, maze_gen.entry, maze_gen.finish, width, height)
 
     try:
         with open(name_file, "w") as f:
-            for y, row in enumerate(grid):  # rangee
+            for y, row in enumerate(grid):
                 for x, value in enumerate(row):
                     number = hex(value)[2:]
                     f.write(number)
                 f.write("\n")
             f.write("\n")
-            f.write(entry)
+            f.write(begin)
             f.write("\n")
             f.write(end)
             f.write("\n")

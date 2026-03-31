@@ -165,8 +165,8 @@ def draw_walls(coord: List[str], config: 'MazeConfig', path: str,
 
             print(wall * (config.WIDTH * 2 + 1))
 
-            change = check_change(config, entry, exit_coord)
-            if change and show_path:
+            change = check_change(config, entry, exit_coord, show_path)
+            if change or show_path:
                 print(change)
 
             print("\nTo display the menu: Ctrl + C :)\n")
